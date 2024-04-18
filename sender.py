@@ -33,4 +33,7 @@ class Sender:
             self.server.sendmail(self.from_email, to, message.as_string())
 
     def close(self):
-        self.server.close()
+        try:
+            self.server.close()
+        except Exception as e:
+            print(e)

@@ -85,8 +85,11 @@ class Receiver:
 
 
     def close(self):
-        self.mail.close()
-        self.mail.logout()
+        try:
+            self.mail.close()
+            self.mail.logout()
+        except Exception as e:
+            print(e)
 
     def search(self, criteria):
         status, data = self.mail.search(None, criteria)
