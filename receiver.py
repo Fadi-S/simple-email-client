@@ -7,13 +7,22 @@ class MLStripper(HTMLParser):
     def __init__(self):
         super().__init__()
         self.reset()
-        self.strict = False
+        self.strict = True
         self.convert_charrefs = True
         self.text = StringIO()
+
     def handle_data(self, d):
         self.text.write(d)
+
     def get_data(self):
         return self.text.getvalue()
+
+def decode_payload(payload, charset):
+    try:
+        return payload.decode(charset)
+    except UnicodeDecodeError:
+        return payload.decode('utf-8', 'ignore')
+
 
 def strip_tags(html):
     s = MLStripper()
@@ -41,11 +50,13 @@ class Email:
                 content_disposition = str(part.get("Content-Disposition"))
                 if "attachment" not in content_disposition:
                     if (not has_html_content and content_type == "text/plain") or content_type == "text/html":
-                        m = part.get_payload(decode=True).decode()
+                        charset = part.get_content_charset() or 'utf-8'
+                        m = (decode_payload(part.get_payload(decode=True), charset))
                         self.messages.append(m)
                         self.stripped_messages.append(strip_tags(m))
         else:
-            m = message.get_payload(decode=True).decode()
+            charset = message.get_content_charset() or 'utf-8'
+            m = decode_payload(message.get_payload(decode=True), charset)
             self.messages.append(m)
             self.stripped_messages.append(strip_tags(m))
 
@@ -63,6 +74,10 @@ class Email:
 
 class Receiver:
     def __init__(self, email_address, password, imap_server, port):
+        self.email_address = email_address
+        self.password = password
+        self.imap_server = imap_server
+        self.port = port
         self.mail = imaplib.IMAP4_SSL(imap_server, port=port)
         self.mail.login(email_address, password)
         self.mail.select('inbox')

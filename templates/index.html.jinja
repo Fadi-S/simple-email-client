@@ -34,7 +34,8 @@
                                             <p>{{ message }}</p>
                                         {% endfor %}
                                     </div>
-                                    <a class="text-blue-800" href="/email/{{ email.id }}?criteria={% filter escape %}{{ search }}{% endfilter %}">
+                                    <a class="text-blue-800"
+                                       href="/email/{{ email.id }}?criteria={% filter escape %}{{ search }}{% endfilter %}">
                                         Read More
                                     </a>
                                 </div>
@@ -156,12 +157,14 @@
                             <span>Compose</span>
                         </a>
                     </div>
-                    <div class="overflow-y-auto h-svh px-6 pt-4 bg-white m-2">
-                        <h1 class="text-xl font-semibold">{{ current_email.subject }}</h1>
+                    <div class="overflow-y-auto max-h-svh px-6 py-6 bg-white m-2 rounded-lg shadow">
+                        <h1 class="text-2xl font-semibold">{{ current_email.subject }}</h1>
                         <span class="text-sm font-bold">{{ current_email.from_email }}</span>
-                        {% for message in current_email.messages %}
-                            <p>{{ message }}</p>
-                        {% endfor %}
+                        <article class="mt-6">
+                            {% for message in current_email.messages %}
+                                <p>{{ message }}</p>
+                            {% endfor %}
+                        </article>
                     </div>
                 {% endif %}
             </main>
