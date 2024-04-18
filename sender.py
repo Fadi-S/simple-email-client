@@ -15,17 +15,20 @@ class Sender:
     def initiate_connection(self):
         context = ssl.create_default_context()
 
+        # Start smtp connection with tls security, then login
         self.server = smtplib.SMTP(self.smtp_server, self.port)
         self.server.starttls(context=context)
         self.server.login(self.from_email, self.password)
 
     def sendMessage(self, to, subject, body, body_type="plain"):
+        # Composer message
         message = MIMEMultipart("alternative")
         message["Subject"] = subject
         message["From"] = self.from_email
         message["To"] = to
         message.attach(MIMEText(body, body_type))
 
+        # Send message to receipient
         try:
             self.server.sendmail(self.from_email, to, message.as_string())
         except:

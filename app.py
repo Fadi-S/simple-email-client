@@ -11,11 +11,13 @@ data = json.load(f)
 
 app = Flask(__name__)
 
-app.isLoggedIn = False
-app.sender = None
-app.receiver = None
-app.email = None
+# Setting some session variables
+app.isLoggedIn = False # If false only login page is accessible
+app.sender = None # object used for sending emails
+app.receiver = None # object used for receiving emails
+app.email = None # Email of the user
 
+# This function run in a thread and checks for incoming emails every 10 seconds
 def check_for_emails():
     with imapclient.IMAPClient(app.receiver.imap_server, port=app.receiver.port) as client:
         client.login(app.receiver.email_address, app.receiver.password)
@@ -35,6 +37,16 @@ def check_for_emails():
             client.idle_done()
 
 app.email_thread = threading.Thread(target=check_for_emails)
+
+'''
+I have 6 routes:
+1) GET / index
+2) GET /login show the login form
+3) POST /login actual login
+4) POST /send Send email
+5) POST /logout Log user out
+6) GET /emails/{id} get a specific email
+'''
 
 @app.route("/")
 def index():
