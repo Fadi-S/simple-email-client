@@ -1,0 +1,50 @@
+{
+  "gmail.com": {
+    "imap": "imap.gmail.com",
+    "smtp": "smtp.gmail.com",
+    "smtp_port": 587,
+    "imap_port": 993
+  },
+  "yahoo.com": {
+    "imap": "imap.mail.yahoo.com",
+    "smtp": "smtp.mail.yahoo.com",
+    "smtp_port": 587,
+    "imap_port": 993
+  },
+  "outlook.com": {
+    "imap": "outlook.office365.com",
+    "smtp": "smtp.office365.com",
+    "smtp_port": 587,
+    "imap_port": 993
+  },
+  "hotmail.com": {
+    "imap": "outlook.office365.com",
+    "smtp": "smtp.office365.com",
+    "smtp_port": 587,
+    "imap_port": 993
+  },
+  "live.com": {
+    "imap": "outlook.office365.com",
+    "smtp": "smtp.office365.com",
+    "smtp_port": 587,
+    "imap_port": 993
+  },
+  "aol.com": {
+    "imap": "imap.aol.com",
+    "smtp": "smtp.aol.com",
+    "smtp_port": 587,
+    "imap_port": 993
+  },
+  "icloud.com": {
+    "imap": "imap.mail.me.com",
+    "smtp": "smtp.mail.me.com",
+    "smtp_port": 587,
+    "imap_port": 993
+  },
+  "awgarstone.com": {
+    "imap": "imap.yandex.com",
+    "smtp": "smtp.yandex.com",
+    "smtp_port": 587,
+    "imap_port": 993
+  }
+}
