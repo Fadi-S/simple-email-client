@@ -23,6 +23,8 @@ def check_for_emails():
         print("Started listening for emails")
         try:
             while True:
+                if not app.isLoggedIn:
+                    break
                 responses = client.idle_check(timeout=10)  # Check for notifications every 10 seconds
                 if responses:
                     print(responses)
@@ -83,7 +85,8 @@ def login_perform():
         try:
             app.sender = Sender(email, password, smtp_server, smtp_port)
             app.receiver = Receiver(email, password, imap_server, imap_port)
-        except:
+        except Exception as e:
+            print(e)
             return redirect(url_for("login", error="Wrong Email or password"))
     else:
         return redirect(url_for("login", error="Domain not supported"))
@@ -94,7 +97,6 @@ def login_perform():
 
 @app.post("/logout")
 def logout():
-    app.email_thread.join()
     app.isLoggedIn = False
     if app.sender:
         app.sender.close()
