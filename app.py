@@ -6,6 +6,9 @@ import threading
 import imapclient
 from plyer import notification
 
+# I created this file to map known email hosts to their smtp servers
+# I tried using mail.tm to send emails as mentioned in the lab report, but
+# they do not provide a smtp server to allow for that
 f = open('known_mail_hosts.json')
 data = json.load(f)
 
